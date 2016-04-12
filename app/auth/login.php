@@ -1,6 +1,8 @@
 <?php
 set_include_path("../../");
-include "configs/autoload.php";
+include "configs/database.php";
+include "configs/view.php";
+include "entity/User.php";
 
 switch($_SERVER['REQUEST_METHOD']){
     case "POST":
