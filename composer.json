@@ -1,0 +1,6 @@
+{
+    "require": {
+        "jms/serializer": "^1.1",
+        "symfony/serializer": "^3.0"
+    }
+}
