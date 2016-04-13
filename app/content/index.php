@@ -6,8 +6,9 @@ include "configs/autoload.php";
 include "entity/Content.php";
 
 $id=filter_input(INPUT_GET,"id");
+$userId=filter_input(INPUT_GET,"userId");
 if(!$id){
-    $contents=$em->getRepository("Content")->findAll();
+    $contents=$em->getRepository("Content")->findBy(["userId"=>$userId]);
     $serializedContent=array();
     foreach($contents as $content){
         $serializedContent[]=$content->toObject();
