@@ -1,14 +1,14 @@
 <?php
 set_include_path("../../");
-include "configs/autoload.php";
 include "entity/Content.php";
+include "../auth/login.php";
 echo var_dump($_POST);
 $text=filter_input(INPUT_POST,"content");
 $subject=filter_input(INPUT_POST,"subject");
 $content=new Content();
-$user=null;
-
-if($user=$auth->hasIdentity()){
+$email=filter_input(INPUT_POST,"email");
+$password=filter_input(INPUT_POST,"password");
+if($user=login($email,$password,$em)){
 
     if($text!=null&&$subject!=null) {
         $content->setContent($text);
