@@ -2,21 +2,26 @@
 <?php
 
 set_include_path("../../");
-include "configs/autoload.php";
 include "entity/Content.php";
-
+include "../auth/login.php";
 $id=filter_input(INPUT_GET,"id");
 $userId=filter_input(INPUT_GET,"userId");
-if(!$id){
-    $contents=$em->getRepository("Content")->findBy(["userId"=>$userId]);
-    $serializedContent=array();
-    foreach($contents as $content){
-        $serializedContent[]=$content->toObject();
-    }
-    echo json_encode($serializedContent);
-}
-else{
-    $contents=$em->getRepository("Content")->findOneBy(array("id"=>$id));
 
-    echo json_encode($contents->toObject());
+$email=filter_input(INPUT_POST,"email");
+$password=filter_input(INPUT_POST,"password");
+
+if($user=login($email,$password,$em)){
+    if(!$id){
+        $contents=$em->getRepository("Content")->findBy(["userId"=>$user->getId()]);
+        $serializedContent=array();
+        foreach($contents as $content){
+            $serializedContent[]=$content->toObject();
+        }
+        echo json_encode($serializedContent);
+    }
+    else{
+        $contents=$em->getRepository("Content")->findOneBy(array("id"=>$id));
+
+        echo json_encode($contents->toObject());
+    }
 }
