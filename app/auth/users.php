@@ -13,7 +13,7 @@ $result=array();
 if($email!=""&&$password!="") {
     $user = $users->findOneBy(array("email" => $email));
     if(password_verify($password,$user->getPassword())){
-        $result=array("success"=>true);
+        $result=array("result"=>array("success"=>true));
 
         $userRecords=$users->findAll();
 
@@ -21,11 +21,11 @@ if($email!=""&&$password!="") {
 
     }
     else{
-        $result=array("success"=>false,"valid"=>true);
+        $result=array("result"=>array("success"=>false,"valid"=>true));
     }
 }
 else{
-    $result=array("valid"=>false,"success"=>false);
+    $result=array("result"=>array("valid"=>false,"success"=>false));
 }
 
 

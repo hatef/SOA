@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 set_include_path("../../");
 include "configs/autoload.php";
 
@@ -16,17 +18,18 @@ function login($email,$password,$em){
     if($email!=""&&$password!="") {
         $user = $users->findOneBy(array("email" => $email));
         if(password_verify($password,$user->getPassword())){
-            
+            $_SESSION["email"]=$email;
+            $_SESSION["password"]=$password;
             return $user;
 
         }
         else{
-            $result=array("success"=>false,"valid"=>true);
+            $result=array("result"=>array("success"=>false,"valid"=>true));
             return false;
         }
     }
     else{
-        $result=array("valid"=>false,"success"=>false);
+        $result=array("result"=>array("valid"=>false,"success"=>false));
         return false;
     }
 
@@ -34,3 +37,5 @@ function login($email,$password,$em){
     echo json_encode($result);
 
 }
+
+login($email,$password,$em);
